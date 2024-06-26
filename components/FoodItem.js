@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable,Image } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 export default function FoodItem({
     id, 
@@ -8,10 +9,18 @@ export default function FoodItem({
     affordability,
     complexity
 }) {
+
+  const navigation = useNavigation();
+  const FoodItemHandler = ()=>{
+    navigation.navigate('FoodDetail', {
+      foodId:id,
+    });
+  }
   return (
     <View style={styles.FoodItem}>
       <Pressable
-                style={({ pressed }) =>(pressed ? styles.buttonPressed : null )} >
+                style={({ pressed }) =>(pressed ? styles.buttonPressed : null )} 
+                onPress={FoodItemHandler}>
         <View style={styles.innerView}>
           <View>
             <Image source={{uri:imageUrl}} style={styles.image}/>

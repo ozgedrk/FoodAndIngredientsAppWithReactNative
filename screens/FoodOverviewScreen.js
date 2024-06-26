@@ -24,7 +24,7 @@ export default function FoodOverviewScreen({route, navigation}) {
   // console.log(displayedFoods);
 
   function  renderFoodItem(itemData){
-    console.log(itemData.item);
+  //  console.log(itemData.item);
 
     const foodItemProps ={
       id:itemData.item.id,
