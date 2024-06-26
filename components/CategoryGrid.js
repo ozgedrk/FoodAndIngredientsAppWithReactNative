@@ -4,13 +4,13 @@ import React from 'react';
 export default function CategoryGrid({ title, color, pressFood }) {
   return (
     <View style={styles.gridItem}>
-      <Pressable
-        style={({ pressed }) => [
+        <Pressable
+          style={({ pressed }) => [
           styles.button,
           pressed ? styles.buttonPressed : null,
-        ]}
-        onPress={pressFood}
-      >
+          ]}
+          onPress={pressFood}
+        >
         <View style={[styles.insideView, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>
         </View>
