@@ -25,7 +25,12 @@ export default function App() {
           title: 'All Categories',
         }} />
         <Stack.Screen name="FoodOverview" component={FoodOverviewScreen} />
-        <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
+        <Stack.Screen 
+        name="FoodDetail" 
+        component={FoodDetailScreen}
+        options={{
+          title: 'Ingredient',
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
