@@ -1,14 +1,24 @@
 import { StyleSheet, Text, View, ScrollView, Image, Pressable } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useContext } from 'react'
 import { FOODS } from '../data/dummy-data';
 import FoodIngredients from '../components/FoodIngredients';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { FavouritesContext } from '../store/favouritescontext';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavourite, removeFavourite } from '../store/redux/favourites';
 
 export default function FoodDetailScreen({route, navigation}) {
 
+   const favouriteFoodsIds = useSelector((state)=>state.favouriteFoods.ids)
+
+    const favouriteFoodContext = useContext(FavouritesContext)
     const foodId = route.params.foodId;
     const selectedFood = FOODS.find((food)=>food.id === foodId);
+
+    // const foodIsFavourite = favouriteFoodContext.ids.includes(foodId);
+
+    const dispatch = useDispatch()
+    const foodIsFavourite = favouriteFoodsIds.includes(foodId);
 
     //console.log(selectedFood)
 
@@ -16,17 +26,32 @@ export default function FoodDetailScreen({route, navigation}) {
         console.log('Pressed!!');
     };
 
+    function changeFavourite(){
+        if (foodIsFavourite) {
+            dispatch(removeFavourite({id:foodId}))
+            // favouriteFoodContext.removeFavourite(foodId);
+        }
+        else
+        {
+            dispatch(addFavourite({id:foodId}))
+            // favouriteFoodContext.addFavourite(foodId);
+        }
+    }
   useLayoutEffect(()=>{
     navigation.setOptions({
         headerRight: ()=> {
         return (
             <Pressable onPress={pressHandler} style={({pressed})=>(pressed ? styles.pressed : null)}>
-                <MaterialCommunityIcons name="star-shooting-outline" size={30} color="white" />
+                <MaterialCommunityIcons 
+                name={foodIsFavourite ? 'star-shooting' : 'star-shooting-outline'} 
+                size={30} 
+                color="white" 
+                onPress={changeFavourite}/>
             </Pressable>
         );
       },
     });
-  },[navigation]);
+  },[navigation, changeFavourite]);
   
 
   return (
